@@ -5,13 +5,16 @@ class Obj{
         this.w = w
         this.h = h
         this.a = a
+
+        this.img = new Image()
+        this.img.src = a
     }
 
     des_carro(){
-        let img = new Image()
-        img.src = this.a
-        des.drawImage(img, this.x, this.y, this.w, this.h)
+        des.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
+
+    
 
     des_quad(){
         des.fillStyle = this.a
@@ -118,19 +121,21 @@ class Player extends Obj{
         }
     }
 
-    // anim(nome){
-    //     this.tempo +=1
-    //     if(this.tempo > 12){
-    //         this.tempo = 0
-    //         this.frame +=1
-    //     }
-    //     if(this.frame>4){
-    //         this.frame=1
-    //     }
-    //     //carro_001_bg
-    //     this.a = "./img/"+nome+this.frame+"_bg.png"
-    // }
-
+    anim(nome){
+        this.tempo +=1
+    
+        if(this.tempo > 12){
+            this.tempo = 0
+            this.frame +=1
+    
+            if(this.frame > 4){
+                this.frame = 1
+            }
+    
+            // Atualiza imagem REAL
+            this.img.src = "../img/" + nome + this.frame + ".png"
+        }
+    }
 
     
 }
