@@ -91,6 +91,10 @@ function ver_fase() {
 }
 
 function colisao() {
+
+    if (bossAtivo) return
+
+
     if (player.colid(inimigo)) {
         // batida.play()
         inimigo.recomeca()
@@ -150,6 +154,9 @@ function desenha() {
         if (bossAtivo) {
             boss.des_carro()
         }
+        if (bossAtivo) {
+            t1.des_text('BOSS VIDA: ' + boss.vida, 800, 80, 'red', '30px Arial')
+        }
         t1.des_text('Pontos: ' + player.pontos, 1000, 40, 'yellow', '26px Arial')
         t2.des_text('Vidas: ' + player.vida, 40, 40, 'red', '26px Arial')
         fase_txt.des_text('Fase: ' + fase, 550, 40, 'white', '26px Arial')
@@ -187,6 +194,12 @@ function colisao_tiro(){
             player.pontos += 50
         }
 
+        if (bossAtivo && t.colide(boss)) {
+            boss.levarDano()
+            tiros.splice(i,1)
+        }
+
+
     })
 }
 
@@ -205,6 +218,11 @@ function bossFight(){
         console.log("CRIANDO BOSS")
         boss = new Boss(1800, 200, 150, 150, '../img/boss.png', 10)
         bossAtivo = true
+
+        inimigo.x = -500
+        inimigo2.x = -500
+        inimigo3.x = -500
+        inimigo4.x = -500
     }
 }
 
@@ -215,14 +233,24 @@ function atualizarBoss() {
     }
 }
 
-function atualiza() {
-    if (jogar) {
-        player.mov_car()
-        player.anim('player0')
+function atualizarInimigos() {
+    if (!bossAtivo) {
         inimigo.mov_car()
         inimigo2.mov_car()
         inimigo3.mov_car()
         inimigo4.mov_car()
+    }
+}
+
+function atualiza() {
+    if (jogar) {
+        player.mov_car()
+        player.anim('player0')
+        atualizarInimigos()
+        // inimigo.mov_car()
+        // inimigo2.mov_car()
+        // inimigo3.mov_car()
+        // inimigo4.mov_car()
         bossFight()
         atualizarBoss()
         atualiza_tiros()
