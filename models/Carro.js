@@ -79,7 +79,7 @@ class Obj{
 class Player extends Obj{
 
     dir = 0
-    dir2 = 5
+    dir2 = 0
     vida = 5
     pontos = 0
     frame = 1
@@ -114,7 +114,7 @@ class Player extends Obj{
     }
 
     point(objeto){
-        if(objeto.x <= -100){
+        if(objeto.x + objeto.w < this.x && objeto.x > -200){
             return true
         }else{
             return false
@@ -147,6 +147,7 @@ class Inimigo extends Obj{
     recomeca(){
         this.x = 1300
         this.y =  Math.floor(Math.random() * (638 - 62) + 62)
+        this.pontuado = false
     }
 
     mov_car(){
@@ -166,3 +167,46 @@ class Text{
     }
 }
 
+class Tiro extends Obj {
+    constructor(x, y){
+        super(x, y, 20, 10, 'red') // usa o Obj
+        this.vel = 10
+    }
+
+    mover(){
+        this.x += this.vel
+    }
+
+    desenhar(){
+        // pode usar o des_quad do Obj
+        this.des_quad()
+    }
+
+    colide(obj){
+        return (
+            this.x < obj.x + obj.w &&
+            this.x + this.w > obj.x &&
+            this.y < obj.y + obj.h &&
+            this.y + this.h > obj.y
+        )
+    }
+}
+
+class Boss extends Obj {
+    constructor(x, y, w, h, img, vida) {
+        super(x, y, w, h, img)
+        this.vida = vida
+    }
+
+    atualizar() {
+        this.x -= 2
+    }
+
+    levarDano() {
+        this.vida--
+        if (this.vida <= 0) {
+            bossMorto = true
+            bossAtivo = false
+        }
+    }
+}
