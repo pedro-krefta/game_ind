@@ -121,21 +121,7 @@ class Player extends Obj{
         }
     }
 
-    anim(nome){
-        this.tempo +=1
     
-        if(this.tempo > 12){
-            this.tempo = 0
-            this.frame +=1
-    
-            if(this.frame > 4){
-                this.frame = 1
-            }
-    
-            // Atualiza imagem REAL
-            this.img.src = "../img/" + nome + this.frame + ".png"
-        }
-    }
 
     
 }
@@ -168,17 +154,17 @@ class Text{
 }
 
 class Tiro extends Obj {
-    constructor(x, y){
-        super(x, y, 20, 10, 'red') // usa o Obj
-        this.vel = 10
-    }
+
+    vel = 10
+    w = 20
+    h = 10
+    a = 'red'
 
     mover(){
         this.x += this.vel
     }
 
     desenhar(){
-        // pode usar o des_quad do Obj
         this.des_quad()
     }
 
@@ -191,22 +177,73 @@ class Tiro extends Obj {
         )
     }
 }
-
 class Boss extends Obj {
-    constructor(x, y, w, h, img, vida) {
-        super(x, y, w, h, img)
-        this.vida = vida
+
+    vida = 10
+    tempoTiro = 0
+    dirY = 2 
+
+    atualizar(){
+
+        this.x = 1450
+
+        this.y += this.dirY
+
+        if(this.y <= 0){
+            this.y = 0
+            this.dirY *= -1
+        }
+
+
+        if(this.y >= 700){
+            this.y = 700
+            this.dirY *= -1
+        }
+
+
+        this.tempoTiro++
+
+        if(this.tempoTiro > 120){
+            this.tempoTiro = 0
+
+            let t = new TiroBoss()
+            t.x = this.x
+            t.y = this.y + this.h / 2
+
+            tirosBoss.push(t)
+        }
     }
 
-    atualizar() {
-        this.x -= 2
-    }
-
-    levarDano() {
+    levarDano(){
         this.vida--
-        if (this.vida <= 0) {
+
+        if(this.vida <= 0){
             bossMorto = true
             bossAtivo = false
         }
+    }
+}
+class TiroBoss extends Obj {
+
+    vel = -10
+    w = 20
+    h = 10
+    a = 'purple'
+
+    mover(){
+        this.x += this.vel
+    }
+
+    desenhar(){
+        this.des_quad()
+    }
+
+    colide(obj){
+        return (
+            this.x < obj.x + obj.w &&
+            this.x + this.w > obj.x &&
+            this.y < obj.y + obj.h &&
+            this.y + this.h > obj.y
+        )
     }
 }
