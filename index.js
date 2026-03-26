@@ -7,7 +7,8 @@ let inimigo4 = new Inimigo(1900, 200, 150, 120, '../img/obstaculo01.png')
 let player = new Player(100, 325, 150, 120, '../img/player01.png')
 let player2 = new Player(100, 325, 150, 120, '../img/player_02.png')
 
-// let boss = new Inimigo(1900, 280, 120, 80, '../img/obstaculo01.png')
+let item = new Coletavel(1900, 100, 100, 80, '../img/coletavel.png')
+
 
 let t1 = new Text()
 let t2 = new Text()
@@ -130,6 +131,16 @@ function colisao() {
         inimigo4.recomeca()
         player2.vida -= 1
     }
+    if (player.colid(item)) {
+        // batida.play()
+        item.esconder()
+        player.vida += 1
+    }
+    if (player2.colid(item)) {
+        // batida.play()
+        item.esconder()
+        player2.vida += 1
+    }
     // console.log('vida: ', player.vida)
 }
 
@@ -168,6 +179,7 @@ function desenha() {
         inimigo2.des_carro()
         inimigo3.des_carro()
         inimigo4.des_carro()
+        item.des_carro()
         desenharPlayers()
         tiros.forEach(t => t.desenhar())
         if (bossAtivo && boss) {
@@ -331,10 +343,7 @@ function atualiza() {
         atualizarInimigos()
         atualizarPlayer1()
         atualizarPlayer2()
-        // inimigo.mov_car()
-        // inimigo2.mov_car()
-        // inimigo3.mov_car()
-        // inimigo4.mov_car()
+        item.mov_car()
         bossFight()
         atualizarBoss()
         atualiza_tirosBoss()

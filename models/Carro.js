@@ -128,7 +128,7 @@ class Player extends Obj{
 
 class Inimigo extends Obj{
 
-    vel = 2
+    vel = 4
 
     recomeca(){
         this.x = 1300
@@ -140,6 +140,44 @@ class Inimigo extends Obj{
         this.x -= this.vel
         if(this.x <= - 200){            
             this.recomeca()         
+        }
+    }
+}
+class Coletavel extends Obj{
+
+    vel = 10
+    ativo = true
+    tempoRespawn = 0
+    tempoMax = 240
+
+    recomeca(){
+        this.x = 1300
+        this.y = Math.floor(Math.random() * (650 - 62) + 62)
+        this.pontuado = false
+        this.ativo = true
+    }
+
+    esconder(){
+        this.x = -500
+        this.ativo = false
+        this.tempoRespawn = 0
+    }
+
+    mov_car(){
+
+        if(this.ativo){
+            this.x -= this.vel
+
+            if(this.x <= -200){
+                this.esconder()
+            }
+
+        } else {
+            this.tempoRespawn++
+
+            if(this.tempoRespawn >= this.tempoMax){
+                this.recomeca()
+            }
         }
     }
 }
