@@ -16,7 +16,7 @@ let fase_txt = new Text()
 let boss = null
 let bossAtivo = false
 let bossMorto = false
-let pontoBoss = 200
+let pontoBoss = 400
 let tirosBoss = []
 
 // let motor = new Audio('./img/motor.wav')
