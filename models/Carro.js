@@ -105,7 +105,7 @@ class Player extends Obj {
 
 class Inimigo extends Obj {
 
-    vel = 4
+    vel = 14
 
     recomeca() {
         this.x = 1300
@@ -194,7 +194,7 @@ class Boss extends Obj {
 
     constructor(x, y, w, h, a, vida) {
         super(x, y, w, h, a)
-        this.vida = vida || 50
+        this.vida = vida || 50 
         this.tempoTiro = 0
         this.dirY = 2
     }
@@ -216,10 +216,23 @@ class Boss extends Obj {
         }
 
         this.tempoTiro++
-        if (this.tempoTiro > 120) {
+        if (this.tempoTiro > 60) {
             this.tempoTiro = 0
-            let t = new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple')
-            tirosBoss.push(t)
+        
+            // tiro reto
+            tirosBoss.push(
+                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple', -10, 0)
+            )
+        
+            // diagonal cima
+            tirosBoss.push(
+                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple', -10, -4)
+            )
+        
+            // diagonal baixo
+            tirosBoss.push(
+                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple', -10, 4)
+            )
         }
     }
 
@@ -234,13 +247,15 @@ class Boss extends Obj {
 
 class TiroBoss extends Obj {
 
-    constructor(x, y, w, h, a) {
+    constructor(x, y, w, h, a, velX, velY) {
         super(x, y, w || 20, h || 10, a || 'purple')
-        this.vel = -10
+        this.velX = velX || -10
+        this.velY = velY || 0
     }
 
     mover() {
-        this.x += this.vel
+        this.x += this.velX
+        this.y += this.velY
     }
 
     desenhar() {
@@ -255,8 +270,6 @@ class TiroBoss extends Obj {
             this.y + this.h > obj.y
         )
     }
-
-    
 }
 
 class BarraVida {

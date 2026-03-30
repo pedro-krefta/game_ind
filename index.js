@@ -95,16 +95,16 @@ function ver_fase() {
 
     if (totalPontos > 200 && fase === 1) {
         fase = 2
-        inimigo.vel  = 3
-        inimigo2.vel = 3
-        inimigo3.vel = 3
-        inimigo4.vel = 3
+        inimigo.vel  = 16
+        inimigo2.vel = 16
+        inimigo3.vel = 16
+        inimigo4.vel = 16
     } else if (totalPontos > 300 && fase === 2) {
         fase = 3
-        inimigo.vel  = 5
-        inimigo2.vel = 5
-        inimigo3.vel = 5
-        inimigo4.vel = 5
+        inimigo.vel  = 18
+        inimigo2.vel = 18
+        inimigo3.vel = 18
+        inimigo4.vel = 18
     }
 }
 
@@ -185,6 +185,7 @@ des.strokeRect(500, 20, 400, 20)
 
 // texto
 t1.des_text('BOSS', 670, 55, 'white', 'bold 16px monospace')
+
         }
 
         if (bossMorto) {
@@ -201,6 +202,7 @@ t1.des_text('BOSS', 670, 55, 'white', 'bold 16px monospace')
         t1.des_text('GAME OVER', 450, 300, 'yellow', '60px Arial')
         t2.des_text('P1 Pontuação Final: ' + player.pontos,  430, 380, 'white',  '25px Arial')
         t2.des_text('P2 Pontuação Final: ' + player2.pontos, 430, 420, 'orange', '25px Arial')
+        t1.des_text('Pressione F5 para recomeçar', 400, 480, 'yellow', '28px Arial')
     }
 }
 
@@ -214,7 +216,7 @@ function colisao_tiro() {
         for (let ini of inimigos) {
             if (t.colide(ini)) {
                 ini.recomeca()
-                if (t.a === 'yellow') player.pontos  += 5
+                if (t.a === 'yellow') player.pontos  += 50
                 else                  player2.pontos += 5
                 tiros.splice(i, 1)
                 acertou = true
@@ -270,7 +272,7 @@ function bossFight() {
     let totalPontos = player.pontos + player2.pontos
 
     if (totalPontos >= pontoBoss && !bossAtivo && !bossMorto) {
-        boss = new Boss(1800, 200, 150, 150, '../img/boss.png', 10)
+        boss = new Boss(1800, 200, 150, 150, '../img/boss.png')
         bossAtivo = true
 
         inimigo.x  = -500
