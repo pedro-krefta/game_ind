@@ -3,72 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monkey Hunter</title>
+    <link rel="stylesheet" href="./style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./models/Carro.js" defer></script>
+    <script src="./index.js" defer></script>
+    <title>Monkey Hunter</title>
     <style>
-        body {
+        #tela-jogo { display: none; }
+
+        #tela-menu {
             background-image: url('./img/capa.png');
             background-size: cover;
             background-position: center;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        /* campo oculto que guarda o modo */
+        #gameMode { display: none; }
     </style>
 </head>
-<body class="h-screen w-screen flex items-center justify-center">
+<body>
 
-    <div class="text-center p-8 bg-black/70 backdrop-blur rounded-xl shadow-lg max-w-md w-full mx-4">
-        
-        <h1 class="text-5xl font-bold text-yellow-400 mb-6">🐵 MONKEY HUNTER</h1>
-        
-        <div class="flex flex-col gap-3 mb-6">
-            <a href="./jogo.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition">▶ JOGAR</a>
-            <button onclick="toggleBox()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition">📦 INFO</button>
-        </div>
-        
-     
-        <div id="infoBox" class="bg-black/80 rounded-lg p-4 text-white text-left transition-all duration-300 hidden">
-            <div class="border-b border-yellow-500/30 pb-2 mb-3">
-                <button onclick="show('sobre')" class="mr-3 text-yellow-400 font-bold">SOBRE</button>
-                <button onclick="show('tutorial')" class="mr-3 text-white hover:text-yellow-400">TUTORIAL</button>
-                <button onclick="show('dicas')" class="text-white hover:text-yellow-400">DICAS</button>
+    <!-- ══════════════ MENU ══════════════ -->
+    <div id="tela-menu">
+        <div class="text-center p-8 bg-black/70 backdrop-blur rounded-xl shadow-lg max-w-md w-full mx-4">
+
+            <h1 class="text-5xl font-bold text-yellow-400 mb-6">🐵 MONKEY HUNTER</h1>
+
+            <div class="flex flex-col gap-3 mb-6">
+
+                <div class="flex gap-3">
+                    <button onclick="iniciarJogo('1p')"
+                        class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition">
+                        👤 1 JOGADOR
+                    </button>
+                    <button onclick="iniciarJogo('2p')"
+                        class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition">
+                        👥 2 JOGADORES
+                    </button>
+                </div>
+
+                <button onclick="toggleBox()"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition">
+                    📦 INFO
+                </button>
             </div>
-            
-            <div id="sobre" class="info-page">
-                <p class="text-sm"> <strong>Desenvolvedor</strong><br>
-                Fiz esse jogo pra me divertir e aprender sobre progamação orientadas a objetos. Espero que vc goste!</p>
-                <p class="text-xl text-gray-400 mt-2"> email: pedrokrefta7@gmai.com</p>
-                <p class="text-xl text-gray-400 mt-2"> contato: (47) 99602-0808 </p>
-            </div>
-            
-            <div id="tutorial" class="info-page hidden">
-                <p class="text-sm">🎮 <strong>Como jogar:</strong><br>
-            A W S D = andar player 1(marrom) <br>
-                ⬅ ⬆ ⬇ ➡ = andar player 2(azul)<br>
-                F = atirar player 1(marro)<br>
-                enter = atirar player 1(marro)<br>
-                Mate os macacos e sobreviva!</p>
-            </div>
-            
-            <div id="dicas" class="info-page hidden">
-                <p class="text-sm">💡 <strong>Dicas:</strong><br>
-                • Nunca fique parado<br>
-                • Use os cantos do mapa<br>
-                • Atire com calma<br>
-                • Divirta-se! 🎯</p>
+
+            <div id="infoBox" class="bg-black/80 rounded-lg p-4 text-white text-left transition-all duration-300 hidden">
+                <div class="border-b border-yellow-500/30 pb-2 mb-3">
+                    <button onclick="show('sobre')"   class="mr-3 text-yellow-400 font-bold">SOBRE</button>
+                    <button onclick="show('tutorial')" class="mr-3 text-white hover:text-yellow-400">TUTORIAL</button>
+                    <button onclick="show('dicas')"    class="text-white hover:text-yellow-400">DICAS</button>
+                </div>
+
+                <div id="sobre" class="info-page">
+                    <p class="text-sm"><strong>Desenvolvedor</strong><br>
+                    Fiz esse jogo pra me divertir e aprender sobre programação orientada a objetos. Espero que vc goste!</p>
+                    <p class="text-xl text-gray-400 mt-2">email: pedrokrefta7@gmai.com</p>
+                    <p class="text-xl text-gray-400 mt-2">contato: (47) 99602-0808</p>
+                </div>
+
+                <div id="tutorial" class="info-page hidden">
+                    <p class="text-sm">🎮 <strong>Como jogar:</strong><br>
+                    W A S D = andar player 1 (marrom)<br>
+                    F = atirar player 1<br><br>
+                    ⬅ ⬆ ⬇ ➡ = andar player 2 (azul)<br>
+                    Enter = atirar player 2<br>
+                    Mate os macacos e sobreviva!</p>
+                </div>
+
+                <div id="dicas" class="info-page hidden">
+                    <p class="text-sm">💡 <strong>Dicas:</strong><br>
+                    • Nunca fique parado<br>
+                    • Use os cantos do mapa<br>
+                    • Atire com calma<br>
+                    • Divirta-se! 🎯</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- ══════════════ JOGO ══════════════ -->
+    <div id="tela-jogo">
+
+        <!-- campo oculto lido pelo index.js -->
+        <input id="gameMode" value="">
+
+        <canvas id="des" width="1600" height="800">
+            <h2>Seu navegador não suporta gráficos</h2>
+        </canvas>
+
+        <button onclick="voltarMenu()"
+            style="position:fixed;bottom:14px;left:16px;font-family:monospace;font-size:12px;
+                   letter-spacing:2px;color:rgba(255,255,255,.35);background:rgba(0,0,0,.55);
+                   border:1px solid rgba(255,255,255,.15);padding:5px 13px;border-radius:3px;cursor:pointer;">
+            ← MENU
+        </button>
+    </div>
+
     <script>
-        function toggleBox() {
-            const box = document.getElementById('infoBox');
-            box.classList.toggle('hidden');
+        function iniciarJogo(modo) {
+            // grava o modo no campo oculto
+            document.getElementById('gameMode').value = modo
+
+            // esconde menu, mostra jogo
+            document.getElementById('tela-menu').style.display = 'none'
+            document.getElementById('tela-jogo').style.display = 'block'
+
+            // dispara evento para o index.js saber que pode iniciar
+            document.dispatchEvent(new CustomEvent('iniciarJogo'))
         }
-        
+
+        function voltarMenu() {
+            location.reload()
+        }
+
+        function toggleBox() {
+            document.getElementById('infoBox').classList.toggle('hidden')
+        }
+
         function show(pagina) {
-            document.getElementById('sobre').classList.add('hidden');
-            document.getElementById('tutorial').classList.add('hidden');
-            document.getElementById('dicas').classList.add('hidden');
-            document.getElementById(pagina).classList.remove('hidden');
+            ['sobre', 'tutorial', 'dicas'].forEach(p =>
+                document.getElementById(p).classList.add('hidden')
+            )
+            document.getElementById(pagina).classList.remove('hidden')
         }
     </script>
 </body>
