@@ -29,7 +29,7 @@ document.addEventListener('iniciarJogo', () => {
     let bg3 = new Image()
     bg1.src = '../img/cenario01.png'
     bg2.src = '../img/cenario02.png'
-    bg3.src = '../img/cenario03.jpg'
+    bg3.src = '../img/cenario03.png'
 
     let t1 = new Text()
     let t2 = new Text()
@@ -247,7 +247,7 @@ document.addEventListener('iniciarJogo', () => {
             for (let ini of inimigos) {
                 if (t.colide(ini)) {
                     ini.recomeca()
-                    if (t.a === 'yellow') player.pontos  += 50
+                    if (t.a === 'yellow') player.pontos  += 5
                     else                  player2.pontos += 5
                     tiros.splice(i, 1)
                     acertou = true
@@ -257,8 +257,8 @@ document.addEventListener('iniciarJogo', () => {
 
             if (!acertou && bossAtivo && boss && t.colide(boss)) {
                 boss.levarDano()
-                if (t.a === 'yellow') player.pontos  += 10
-                else                  player2.pontos += 10
+                if (t.a === 'yellow') player.pontos  += 1
+                else                  player2.pontos += 1
                 tiros.splice(i, 1)
             }
         }
