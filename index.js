@@ -21,7 +21,7 @@ document.addEventListener('iniciarJogo', () => {
     // Em modo 1P, player2 começa morto e fora da tela
     if (IS_1P) {
         player2.vida = 0
-        player2.x    = -9999
+        player2.x    = -999999
     }
 
     let bg1 = new Image()

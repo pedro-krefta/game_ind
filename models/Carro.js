@@ -73,8 +73,6 @@ class Player extends Obj {
     dir2 = 0
     vida = 5
     pontos = 0
-    frame = 1
-    tempo = 0
 
     mov_car() {
         this.y += this.dir
