@@ -126,7 +126,7 @@ class Coletavel extends Obj {
     vel = 10
     ativo = true
     tempoRespawn = 0
-    tempoMax = 240
+    tempoMax = 150
 
     recomeca() {
         this.x = 1300
@@ -221,17 +221,17 @@ class Boss extends Obj {
         
             // tiro reto
             tirosBoss.push(
-                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple', -10, 0)
+                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'red', -10, 0)
             )
         
             // diagonal cima
             tirosBoss.push(
-                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple', -10, -4)
+                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'red', -10, -4)
             )
         
             // diagonal baixo
             tirosBoss.push(
-                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'purple', -10, 4)
+                new TiroBoss(this.x, this.y + this.h / 2, 20, 10, 'red', -10, 4)
             )
         }
     }
