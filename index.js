@@ -49,6 +49,7 @@ document.addEventListener('iniciarJogo', () => {
     let somGameOver = new Audio('./img/gameOver.mp3')
     trilha.volume = 0.5
     trilha.loop = true
+    somTiro.volume = 0.1
 
     let jogar = true
     let fase = 1
